@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
+from celery.schedules import crontab
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,6 +44,12 @@ INSTALLED_APPS = [
 
     # DjangoRESTFramework
     'rest_framework',
+
+    # Распределенная система обработки задач в фоновом режиме
+    'django_celery_beat',
+
+    # Документация
+    'drf_yasg',
 
     # Приложения
     'rate.apps.RateConfig',
@@ -120,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 
@@ -147,3 +155,16 @@ AUTH_USER_MODEL = 'users.User'
 ADMIN_USERNAME = os.getenv('ADMIN_USERNAME')
 ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')
+
+# Celery
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+CELERY_TIMEZONE = os.getenv('CELERY_TIMEZONE')
+CELERY_TASK_TRACK_STARTED = True
+CELERY_BEAT_SCHEDULE = {
+    'task-name': {
+        'task': 'rate.tasks.check_currency_rate',
+        # 'schedule': timedelta(minutes=1),
+        'schedule': crontab(minute='0', hour='12'),
+    },
+}
