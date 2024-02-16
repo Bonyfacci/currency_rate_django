@@ -19,31 +19,30 @@ class CurrencyRateCBRF:
 
     def write_currency_and_rates_to_db(self):
         # Обновляем модель валют
-        for charcode, info in self.rates.items():
-            currency, created = Currency.objects.update_or_create(
-                charcode=charcode,
-                defaults={
-                    'valuta_id': info['ID'],
-                    'numcode': info['NumCode'],
-                    'nominal': info['Nominal'],
-                    'name': info['Name'],
-                }
-            )
+        for charcode, info in self.rates['Valute'].items():
+            if isinstance(info, dict):
+                currency, created = Currency.objects.update_or_create(
+                    charcode=charcode,
+                    defaults={
+                        'valuta_id': info.get('ID', ''),
+                        'numcode': info.get('NumCode', 0),
+                        'nominal': info.get('Nominal', 0),
+                        'name': info.get('Name', ''),
+                    }
+                )
+            else:
+                print(f"Внимание: Информация для {charcode} не является словарём.")
 
             # Обновляем курсы валют в базе данных
             rate, created = CurrencyRate.objects.get_or_create(
                 currency=currency,
                 date=self.date,
-                defaults={'rate': info['Value']}
+                defaults={'rate': info.get('Value', 0)}
             )
 
             # Если курс валюты на указанную дату уже существует, обновляем его
             if not created:
-                rate.rate = info['Value']
+                rate.rate = info.get('Value', 0)
                 rate.save()
 
-            self.stdout.write(
-                self.style.SUCCESS(
-                    f'Successfully updated {currency.charcode} rate to {info["Value"]} on {self.date}'
-                )
-            )
+            print(f"Успешно обновлен курс {currency.charcode} до {info.get('Value', 0)} на {self.date}")
