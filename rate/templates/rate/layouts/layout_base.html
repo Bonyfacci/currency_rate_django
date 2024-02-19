@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="shortcut icon" href="{% static 'favicon.png' %}">
+
+    <link href="{% static '/rate/css/style.css' %}" rel="stylesheet">
+    <link href="{% static '/rate/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+
+<body>
+
+    {% include 'rate/layouts/layout_header.html' %}
+
+
+    {% block content %}
+
+    {% endblock %}
+
+
+    {% block element %}
+
+    {% endblock %}
+
+
+    {% block blog %}
+
+    {% endblock %}
+
+
+    {% include 'rate/layouts/layout_footer.html' %}
+
+</body>

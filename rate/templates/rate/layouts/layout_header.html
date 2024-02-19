@@ -1,0 +1,24 @@
+<header>
+    <section class="container py-3">
+        <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+            <a href="{% url 'admin:index' %}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="-3 -3 32 32" fill="none">
+                    <path xmlns="http://www.w3.org/2000/svg" d="M12.3325 12.0513l3.9814-4.8655c.0873-.0861.0136-.1858-.1151-.1858h-2.036c-.0304 0-.1161.0429-.1161.0429l-4.691 5.4215-.0159-5.3511c0-.0569-.0597-.1133-.133-.1133H7.5696c-.0869 0-.1404.0564-.1404.1132v9.7039c0 .0576.0535.1144.1404.1144h1.6372c.0733 0 .133-.0568.133-.1144l.0158-1.7955c.2738-.2683 1.4705-1.4379 1.7087-1.7087l2.9149 3.5757c.0106.0147.081.0429.1103.0429h2.1387c.1268 0 .2001-.0997.1132-.1836l-4.0089-4.6966z" fill="#FF2525"/>
+                    <path xmlns="http://www.w3.org/2000/svg" d="M11.5511 0C5.1792 0 0 5.1697 0 11.5236c0 6.3562 5.1792 11.5248 11.5511 11.5248 6.3686 0 11.549-5.169 11.549-11.5248C23.1001 5.1697 17.9197 0 11.5511 0zm0 21.1399c-5.3144 0-9.6368-4.3131-9.6368-9.6159 0-5.301 4.3224-9.6137 9.6368-9.6137 5.3127 0 9.635 4.3131 9.635 9.6137 0 5.3028-4.3223 9.6159-9.635 9.6159z" fill="#FF2525"/>
+                </svg>
+                <span class="fs-4">Kokoc Group</span>
+            </a>
+
+            <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none"
+                   href="{% url 'rate:home' %}">
+                    Главная
+                </a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none"
+                   href="{% url 'rate:currency-list' %}">
+                    Каталог валют
+                </a>
+            </nav>
+        </div>
+    </section>
+</header>

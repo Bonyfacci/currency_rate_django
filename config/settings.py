@@ -164,7 +164,7 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_BEAT_SCHEDULE = {
     'task-name': {
         'task': 'rate.tasks.check_currency_rate',
-        # 'schedule': timedelta(minutes=1),
-        'schedule': crontab(minute='0', hour='12'),
+        'schedule': timedelta(minutes=1),
+        # 'schedule': crontab(minute='0', hour='12'),
     },
 }

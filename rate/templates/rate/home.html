@@ -1,0 +1,56 @@
+{% extends 'rate/layouts/layout_base.html' %}
+
+{% block title %}Отображение курса валют ЦБ РФ{% endblock %}
+
+
+{% block content %}
+
+<main>
+    <section class="container">
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <h1 class="display-4 fw-normal text-body-emphasis">Отображение курса валют ЦБ РФ</h1>
+            <p class="fs-5 text-body-secondary">Django-приложение,
+                которое отображает курс валюты по отношению к рублю на заданную дату.</p>
+        </div>
+    </section>
+    <section class="container">
+        <form method="post" action="" class="row text-center g-3" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="mb-3">
+                <label for="currency" class="form-label">Выберите валюту</label>
+                <select id="currency" name="currency">
+                    {% for currency in currencies %}
+                        <option value="{{ currency.id }}">
+                            {{ currency.charcode }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-success mb-3">Получить курс</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+{% endblock %}
+
+
+{% block element %}
+
+<section class="container">
+    <div class="text-center">
+        {% if currency_rate %}
+            <p>Курс выбранной валюты на {{ currency_rate.date }} :</p>
+            <p>{{ currency_rate.currency.nominal }} {{ currency_rate.currency.charcode }} = {{ currency_rate.rate }} рублей</p>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
+
+{% block blog %}
+
+
+{% endblock %}
