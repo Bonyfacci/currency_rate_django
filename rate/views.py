@@ -1,3 +1,6 @@
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
@@ -139,3 +142,57 @@ class CurrencyRateAPIView(APIView):
         }
 
         return Response(data)
+
+
+def home(request: HttpRequest) -> HttpResponse:
+    """
+    Домашняя страница
+    :param request: {method},
+    :return: HttpResponse
+    """
+    currencies = Currency.objects.all()
+    selected_currency_id = request.POST.get('currency', None)
+
+    if selected_currency_id:
+        selected_currency = Currency.objects.get(id=selected_currency_id)
+        currency_rate = CurrencyRate.objects.filter(currency=selected_currency).first()
+    else:
+        currency_rate = None
+
+    return render(
+        request,
+        template_name='rate/home.html',
+        context={'currencies': currencies, 'currency_rate': currency_rate},
+    )
+
+
+class CurrencyListView(ListView):
+    """
+    Представление для списка валют.
+    Выводит список всех доступных валют.
+    """
+    model = Currency
+    serializer_class = CurrencySerializer
+
+
+class CurrencyRateListView(ListView):
+    """
+    Представление для списка курсов валют.
+    Выводит список всех доступных курсов валют.
+    """
+    model = CurrencyRate
+    serializer_class = CurrencyRateSerializer
+
+
+class CurrencyRateDetailView(DetailView):
+    """
+    Представление для детальной информации о курсе валюты.
+    Выводит детальную информацию о курсе валюты по заданному идентификатору.
+    """
+    model = CurrencyRate
+    serializer_class = CurrencyRateSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(pk=self.kwargs.get('pk'))
+        return queryset

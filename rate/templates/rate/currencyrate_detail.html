@@ -1,0 +1,56 @@
+{% extends 'rate/layouts/layout_base.html' %}
+
+{% block title %}{{ object.currency }}{% endblock %}
+
+
+{% block content %}
+
+<section class="container">
+    <div class="col-auto">
+        <table class="table table-bordered border-dark table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="text-center" scope="col">Единиц</th>
+                <th class="text-center" scope="col">Код валюты</th>
+                <th class="text-center" scope="col">Дата установки курса</th>
+                <th class="text-center" scope="col">Курс валюты в рублях</th>
+            </tr>
+            </thead>
+
+            {% if object_list %}
+                <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <th class="text-center" scope="row">{{ object.currency.nominal }}</th>
+                        <th class="text-center" scope="row">{{ object.currency.charcode }}</th>
+                        <td class="text-center" scope="row">{{ object.date }}</td>
+                        <td class="text-center" scope="row">{{ object.rate }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% else %}
+                <tbody>
+                    <tr>
+                        <th class="text-center" scope="row">-</th>
+                        <th class="text-center" scope="row">-</th>
+                        <td class="text-center" scope="row">-</td>
+                        <td class="text-center" scope="row">-</td>
+                    </tr>
+                </tbody>
+            {% endif %}
+        </table>
+    </div>
+</section>
+
+{% endblock %}
+
+
+{% block element %}
+
+
+{% endblock %}
+
+{% block blog %}
+
+
+{% endblock %}

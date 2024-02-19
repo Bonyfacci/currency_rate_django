@@ -30,6 +30,7 @@ services:
     tty: true
     command: sh -c "python3 manage.py migrate && 
                     python3 manage.py csu && 
+                    python3 manage.py fill_db && 
                     python3 manage.py runserver 0.0.0.0:8000"
     ports:
       - '8000:8000'

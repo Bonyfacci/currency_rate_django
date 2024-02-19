@@ -2,6 +2,8 @@
 
 ### Стек технологий:
 
+<img align="right" alt="PNG" height="200px" src="https://newsrus.su/catalogs/samoregulirovanie/images/1453788241.png" />
+
  - ![alt text](https://img.shields.io/badge/Python-3.11.5-grey?style=plastic&logo=python&logoColor=white&labelColor=%233776AB)
 
  - ![alt text](https://img.shields.io/badge/Django-4.2.10-grey?style=plastic&logo=django&logoColor=white&labelColor=%23092E20)
@@ -41,80 +43,88 @@ https://www.cbr-xml-daily.ru/daily_json.js
 <details>
 <summary>Для запуска через консоль необходимо:</summary>
 
- - Клонировать проект на собственный диск в новом каталоге
-   - Создать виртуальное окружение
-   - Установить зависимости командой:
+- Клонировать проект на собственный диск в новом каталоге
+  - Создать виртуальное окружение
+  - Установить зависимости командой:
 ```python
-    pip install -r requirements.txt
+pip install -r requirements.txt
 ```
- <details>
-   <summary>Прописать переменные окружения в файле `.env.sample`</summary>
+<details>
+<summary>Прописать переменные окружения в файле `.env.sample`</summary>
    
-    ```dotenv
-    SECRET_KEY='Секретный ключ Django'
-    DEBUG='True/False', например: True
-    
-    POSTGRES_DB_NAME='Название базы данных', например: 'name_of_db' или 'currency_rate'
-    POSTGRES_DB_USER='Пользователь базы данных', например: 'db_user' или 'postgres'
-    POSTGRES_DB_PASSWORD='Пароль пользователя базы данных', например: 'your_password'
-    POSTGRES_DB_HOST='Хост базы данных', например: '127.0.0.1' или 'localhost' или 'db' (для Docker)
-    POSTGRES_DB_PORT='Порт базы данных', например: '5432'
+```dotenv
+SECRET_KEY='Секретный ключ Django'
+DEBUG='True/False', например: True
 
-    ADMIN_USERNAME=admin
-    ADMIN_EMAIL=admin@example.com
-    ADMIN_PASSWORD=admin
-   
-    CELERY_BROKER_URL=redis://redis:6379/0
-    CELERY_RESULT_BACKEND=redis://redis:6379/0
-    CELERY_TIMEZONE=Europe/Madrid
+POSTGRES_DB_NAME='Название базы данных', например: 'name_of_db' или 'currency_rate'
+POSTGRES_DB_USER='Пользователь базы данных', например: 'db_user' или 'postgres'
+POSTGRES_DB_PASSWORD='Пароль пользователя базы данных', например: 'your_password'
+POSTGRES_DB_HOST='Хост базы данных', например: '127.0.0.1' или 'localhost' или 'db' (для Docker)
+POSTGRES_DB_PORT='Порт базы данных', например: '5432'
+
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=admin
+
+CELERY_BROKER_URL=redis://redis:6379/0
+CELERY_RESULT_BACKEND=redis://redis:6379/0
+CELERY_TIMEZONE=Europe/Madrid
+```
+</details>
+
+<details>
+<summary>Создать базу данных (в данном проекте используется PostgreSQL)</summary>
+
+```python
+psql -U postgres
+create database currency_rate;
+\q
+```
+</details>
+
+- Применить миграции командой:
+    ```python
+    python manage.py migrate
     ```
- </details>
 
- <details>
-   <summary>Создать базу данных (в данном проекте используется PostgreSQL)</summary>
+<details>
+<summary>Для создания тестового пользователя - администратор:</summary>
 
- ```python
- psql -U postgres
- create database currency_rate;
- \q
- ```
-   </details>
+- login: admin@example.com
+- password: admin 
+    ```python
+    python manage.py csu
+    ```
+</details>
 
- - Применить миграции командой:
-   ```python
-   python manage.py migrate
-   ```
+<details>
+<summary>Для заполнения базы данными:</summary>
 
- <details>
-   <summary>Для создания тестового пользователя - администратор:</summary>
-
-   - login: admin@example.com
-   - password: admin 
-   ```python
-        python manage.py csu
-   ```
- </details>
+```python
+python manage.py fill_db
+```
+</details>
  
- <details>
- <summary>Для запуска сервера через терминал:</summary>
+<details>
+<summary>Для запуска сервера через терминал:</summary>
 
-  - Запустить Redis (в окне терминала под Ubuntu)
-     ```linux
-           sudo service redis-server start
-     ```
-  - Запустить celery (в другом окне терминала)
-     ```python
-         celery -A config worker -l INFO -P eventlet
-     ```
-  - Запустить tasks (в другом окне терминала)
-     ```python
-         celery -A config beat -l info -S django
-     ```
-  - Запустить сервер (в другом окне терминала)
-     ```python
-         python manage.py runserver
-     ```
- </details>
+- Запустить Redis (в окне терминала под Ubuntu)
+    ```linux
+    sudo service redis-server start
+    ```
+- Запустить celery (в другом окне терминала)
+    ```python
+    celery -A config worker -l INFO -P eventlet
+    ```
+- Запустить tasks (в другом окне терминала)
+    ```python
+    celery -A config beat -l info -S django
+    ```
+- Запустить сервер (в другом окне терминала)
+    ```python
+    python manage.py runserver
+    ```
+</details>
 
 </details>
 
@@ -147,11 +157,11 @@ https://www.cbr-xml-daily.ru/daily_json.js
     CELERY_RESULT_BACKEND=redis://redis:6379/0
     CELERY_TIMEZONE=Europe/Madrid
     ```
- </details>
+   </details>
 
 - Ввести в терминале команду:
     ```python
-        docker-compose up --build
+    docker-compose up --build
     ```
     > Происходит сборка образа контейнера согласно инструкции в файле Dockerfile и последовательный запуск всех контейнеров согласно инструкции в файле docker-compose.yaml
 
