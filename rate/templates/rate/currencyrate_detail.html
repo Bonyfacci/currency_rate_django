@@ -4,7 +4,14 @@
 
 
 {% block content %}
-
+<section class="container">
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h3 class="fw-normal text-body-emphasis">Отображение курса валют ЦБ РФ</h3>
+        <p class="fs-5 text-body-secondary">
+            {{ currency }} - {{ name }}
+        </p>
+    </div>
+</section>
 <section class="container">
     <div class="col-auto">
         <table class="table table-bordered border-dark table-striped table-hover">
@@ -21,18 +28,18 @@
                 <tbody>
                 {% for object in object_list %}
                     <tr>
-                        <th class="text-center" scope="row">{{ object.currency.nominal }}</th>
-                        <th class="text-center" scope="row">{{ object.currency.charcode }}</th>
+                        <td class="text-center" scope="row">{{ object.currency.nominal }}</td>
+                        <td class="text-center" scope="row">{{ object.currency }}</td>
+                        <td class="text-center" scope="row">{{ object.rate }} рублей</td>
                         <td class="text-center" scope="row">{{ object.date }}</td>
-                        <td class="text-center" scope="row">{{ object.rate }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             {% else %}
                 <tbody>
                     <tr>
-                        <th class="text-center" scope="row">-</th>
-                        <th class="text-center" scope="row">-</th>
+                        <td class="text-center" scope="row">-</td>
+                        <td class="text-center" scope="row">-</td>
                         <td class="text-center" scope="row">-</td>
                         <td class="text-center" scope="row">-</td>
                     </tr>
