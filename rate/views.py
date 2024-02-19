@@ -182,17 +182,38 @@ class CurrencyRateListView(ListView):
     """
     model = CurrencyRate
     serializer_class = CurrencyRateSerializer
+    ordering = ('-date', 'currency__charcode')
+
+    def get_queryset(self):
+        latest_date = CurrencyRate.objects.latest('date').date
+        queryset = CurrencyRate.objects.filter(date=latest_date)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['latest_date'] = self.get_queryset().first().date
+        return context
 
 
-class CurrencyRateDetailView(DetailView):
+class CurrencyRateDetailView(ListView):
     """
     Представление для детальной информации о курсе валюты.
     Выводит детальную информацию о курсе валюты по заданному идентификатору.
     """
     model = CurrencyRate
     serializer_class = CurrencyRateSerializer
+    template_name = 'rate/currencyrate_detail.html'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(pk=self.kwargs.get('pk'))
+        currency_id = self.kwargs.get('currency_id')
+        queryset = CurrencyRate.objects.filter(currency__id=currency_id)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        queryset = self.get_queryset()
+        if queryset.exists():
+            latest_rate = queryset.first()
+            context['currency'] = latest_rate.currency
+            context['name'] = latest_rate.currency.name
+        return context

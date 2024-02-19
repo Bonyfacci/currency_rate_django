@@ -4,7 +4,14 @@
 
 
 {% block content %}
-
+<section class="container">
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h3 class="fw-normal text-body-emphasis">Отображение курса валют ЦБ РФ</h3>
+        <p class="fs-5 text-body-secondary">
+            На {{ latest_date }}
+        </p>
+    </div>
+</section>
 <section class="container">
     <div class="col-auto">
         <table class="table table-bordered border-dark table-striped table-hover">
@@ -14,8 +21,6 @@
                 <th class="text-center" scope="col">Код валюты</th>
                 <th class="text-center" scope="col">Дата установки курса</th>
                 <th class="text-center" scope="col">Курс валюты в рублях</th>
-
-                <th class="text-center" scope="col">Действие</th>
             </tr>
             </thead>
 
@@ -27,19 +32,6 @@
                         <th class="text-center" scope="row">{{ object.currency }}</th>
                         <td class="text-center">{{ object.date }}</td>
                         <td class="text-center">{{ object.rate }}</td>
-
-                        <td class="text-center">
-                            <div class="btn-group">
-                                {% if object %}
-                                    <a class="btn btn-sm btn-info"
-                                       href="{# url 'rate:currency-rate-detail' object.pk #}">
-                                        Посмотреть курс
-                                    </a>
-                                {% else %}
-                                    <p>Действия недоступны</p>
-                                {% endif %}
-                            </div>
-                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
