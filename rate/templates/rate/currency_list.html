@@ -34,7 +34,7 @@
                         <div class="btn-group">
                             {% if object %}
                                 <a class="btn btn-sm btn-info"
-                                   href="{# url 'rate:currency-rate-detail' object.pk #}">
+                                   href="{% url 'rate:currency-rate-detail' object.pk %}">
                                     Посмотреть курс
                                 </a>
                             {% else %}

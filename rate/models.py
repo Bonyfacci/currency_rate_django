@@ -38,4 +38,4 @@ class CurrencyRate(models.Model):
     class Meta:
         verbose_name = 'Курс валюты'
         verbose_name_plural = 'Курсы валют'
-        ordering = ('date',)
+        ordering = ('-date',)
