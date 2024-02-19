@@ -14,4 +14,4 @@ class CurrencyRateListAdmin(admin.ModelAdmin):
     list_display = ('currency', 'date', 'rate')
     search_fields = ('currency__charcode', 'date')
     list_filter = ('currency', 'date')
-    ordering = ('date', 'currency')
+    ordering = ('-date', 'currency')

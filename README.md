@@ -96,6 +96,14 @@ create database currency_rate;
     python manage.py csu
     ```
 </details>
+
+<details>
+<summary>Для заполнения базы данными:</summary>
+
+```python
+python manage.py fill_db
+```
+</details>
  
 <details>
 <summary>Для запуска сервера через терминал:</summary>

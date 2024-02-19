@@ -1,0 +1,64 @@
+{% extends 'rate/layouts/layout_base.html' %}
+
+{% block title %}Каталог валют{% endblock %}
+
+
+{% block content %}
+
+<section class="container">
+    <div class="col-auto">
+        <table class="table table-bordered border-dark table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="text-center" scope="col">Буквенный код</th>
+                <th class="text-center" scope="col">ID валюты</th>
+                <th class="text-center" scope="col">Цифровой код</th>
+                <th class="text-center" scope="col">Единиц</th>
+                <th class="text-center" scope="col">Валюта</th>
+
+                <th class="text-center" scope="col">Действие</th>
+            </tr>
+            </thead>
+
+            {% if object_list %}
+                <tbody>
+                {% for object in object_list %}
+                <tr>
+                    <th class="text-center" scope="row">{{ object.charcode }}</th>
+                    <td class="text-center">{{ object.valuta_id }}</td>
+                    <td class="text-center">{{ object.numcode }}</td>
+                    <td class="text-center">{{ object.nominal }}</td>
+                    <td class="text-center">{{ object.name }}</td>
+
+                    <td class="text-center">
+                        <div class="btn-group">
+                            {% if object %}
+                                <a class="btn btn-sm btn-info"
+                                   href="{# url 'rate:currency-rate-detail' object.pk #}">
+                                    Посмотреть курс
+                                </a>
+                            {% else %}
+                                <p>Действия недоступны</p>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            {% endif %}
+        </table>
+    </div>
+</section>
+
+{% endblock %}
+
+
+{% block element %}
+
+
+{% endblock %}
+
+{% block blog %}
+
+
+{% endblock %}
